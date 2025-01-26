@@ -2,6 +2,7 @@
   "name": "tasktracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Nithish-gitt.github.io/Tasktracker",
   "dependencies": {
     "cra-template": "1.2.0",
     "jspdf": "^2.5.2",

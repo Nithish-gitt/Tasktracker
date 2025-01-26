@@ -1,0 +1,274 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container */
+  .p-6 {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Headings */
+  h1 {
+    font-size: 24px;
+    color: #333333;
+    text-align: center;
+  }
+  
+  /* Inputs and Select */
+  input,
+  select {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  input:disabled,
+  select:disabled {
+    background-color: #e5e7eb;
+    cursor: not-allowed;
+  }
+  
+  /* Buttons */
+  button {
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    filter: brightness(1.1);
+  }
+  
+  .bg-blue-500 {
+    background-color: #3b82f6;
+  }
+  
+  .bg-blue-600 {
+    background-color: #2563eb;
+  }
+  
+  .bg-green-500 {
+    background-color: #10b981;
+  }
+  
+  .bg-green-600 {
+    background-color: #059669;
+  }
+  
+  .bg-yellow-500 {
+    background-color: #fbbf24;
+  }
+  
+  .bg-yellow-600 {
+    background-color: #f59e0b;
+  }
+  
+  .bg-gray-200 {
+    background-color: #e5e7eb;
+  }
+  
+  .bg-red-500 {
+    background-color: #ef4444;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-black {
+    color: black;
+  }
+  
+  /* Table */
+  table {
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    /* width:100%; */
+  }
+  .truncated-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px; /* Adjust the width as needed */
+    cursor: pointer;
+}
+
+/* Popup styling */
+.popup {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #888;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    padding: 20px;
+    background-color: white;
+    z-index: 1000;
+}
+
+#closePopup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+  
+  th {
+    background-color: #f3f4f6;
+  }
+  
+  .bg-green-100 {
+    background-color: #d1fae5;
+  }
+  
+  .bg-green-500 {
+    background-color: #10b981;
+  }
+  
+  .bg-gray-100 {
+    background-color: #f3f4f6;
+  }
+  
+  /* Lock and Save */
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* Center the card on the page */
+.center-card {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f3f4f6; /* Light background */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Style for the card container */
+  .card-container {
+    background-color: #ffffff; /* White background for the card */
+    padding: 2rem; /* Space inside the card */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: 100%;
+    max-width: 600px; /* Max width for the card */
+    text-align: center;
+  }
+
+  .flex-container {
+    display: flex; /* Enables flexbox */
+    gap: 16px; /* Space between items */
+    /* Optional styles for demonstration */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* background-color: #f3f4f6; Light background */
+  }
+  
+  .flex-item {
+    padding: 10px 20px;
+    background-color: #4a90e2; /* Button color */
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+  }
+
+  /* Dropdown container */
+/* Container for input and dropdown */
+.input-dropdown-container {
+    display: flex; /* Use flexbox for layout */
+    gap: 16px; /* Add spacing between the input and dropdown */
+    align-items: center; /* Vertically align fields */
+    width: 100%; /* Full width */
+    max-width: 400px; /* Maximum width for the container */
+  }
+  
+  /* Input field */
+  .input-field {
+    flex: 1; /* Makes it responsive */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    margin-bottom: 20px;
+  }
+  
+  /* Dropdown field */
+  .dropdown {
+    flex: 1; /* Matches width with the input field */
+    position: relative;
+  }
+  
+  .dropdown select {
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+
+  }
+  
+  .dropdown select:hover,
+  .input-field:hover {
+    border-color: #4a90e2;
+  }
+  
+  .dropdown select:focus,
+  .input-field:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+  }
+  
+  td[title]:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+    
+  
+  
+  

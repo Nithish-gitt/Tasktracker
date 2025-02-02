@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import Confetti from "react-confetti";
-import { jsPDF } from "jspdf";
+// import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import './weeklytasks.css';
 import { v4 as uuidv4 } from 'uuid'; // Importing UUID for unique task IDs
@@ -63,6 +63,8 @@ const WeeklyTasks = () => {
     };
     setTasks([...tasks, newTask]);
     setTaskInput("");
+    saveToBrowser();
+    
   };
 
   const updateTaskStatus = (taskId, status) => {
@@ -70,37 +72,40 @@ const WeeklyTasks = () => {
       task.id === taskId ? { ...task, status } : task
     );
     setTasks(updatedTasks);
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
   };
 
   const deleteTask = (taskId) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
+    localStorage.removeItem('tasks', JSON.stringify(tasks));
   };
 
-  const saveProgress = () => {
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text(`Weekly Tasks Progress ${new Date()}`, 10, 10);
+  // const saveProgress = () => {
+  //   const doc = new jsPDF();
+  //   doc.setFontSize(16);
+  //   doc.text(`Weekly Tasks Progress ${new Date()}`, 10, 10);
 
-    const headers = [["Day", "Task", "Status"]];
-    const data = tasks.map((task) => [task.day, task.title, task.status]);
+  //   const headers = [["Day", "Task", "Status"]];
+  //   const data = tasks.map((task) => [task.day, task.title, task.status]);
 
-    doc.autoTable({
-      head: headers,
-      body: data,
-      startY: 20,
-      theme: "grid",
-      headStyles: { fillColor: [60, 179, 113] },
-      styles: { halign: "center" },
-    });
+  //   doc.autoTable({
+  //     head: headers,
+  //     body: data,
+  //     startY: 20,
+  //     theme: "grid",
+  //     headStyles: { fillColor: [60, 179, 113] },
+  //     styles: { halign: "center" },
+  //   });
 
-    doc.save(`Weekly_Tasks_Progress_${new Date()}.pdf`);
-    setIsLocked(false);
-    setIsSaveVisible(false);
-  };
+  //   doc.save(`Weekly_Tasks_Progress_${new Date()}.pdf`);
+  //   setIsLocked(false);
+  //   setIsSaveVisible(false);
+  // };
 
   const toggleLock = () => {
     if (isLocked) {
+      localStorage.setItem('tasks', JSON.stringify(tasks));
       setIsSaveVisible(true);
     } else {
       setIsLocked(true);
@@ -123,11 +128,6 @@ const WeeklyTasks = () => {
     return dayTasks.length > 0 && dayTasks.every((task) => task.status === "Completed");
   };
 
-//   const isDayInprogress = (day) => {
-//     const dayTasks = tasks.filter((task) => task.day === day);
-//     return dayTasks.length > 0 && dayTasks.every((task) => task.status === "Completed");
-//   };
-
   const saveToFile = async () => {
     try {
       const handle = await window.showSaveFilePicker({
@@ -143,6 +143,7 @@ const WeeklyTasks = () => {
       const writable = await handle.createWritable();
       await writable.write(JSON.stringify(tasks, null, 2));
       await writable.close();
+      localStorage.removeItem('tasks');
       alert("Tasks saved successfully!");
     } catch (error) {
       console.error("Error saving file:", error);
@@ -151,23 +152,37 @@ const WeeklyTasks = () => {
 
   const loadFromFile = async () => {
     try {
-      const [handle] = await window.showOpenFilePicker({
+    
+      if(localStorage.getItem('tasks') !== null)
+        {
+          const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+          console.log(storedTasks)
+          setTasks(storedTasks);
+          alert("Tasks loaded successfully!");
+
+        }
+        else{
+            const [handle] = await window.showOpenFilePicker({
         types: [
           {
             description: "JSON Files",
             accept: { "application/json": [".json"] },
           },
         ],
-      });
+    });
 
       const file = await handle.getFile();
       const content = await file.text();
       const loadedTasks = JSON.parse(content);
       setTasks(loadedTasks);
-      alert("Tasks loaded successfully!");
+
+        }
     } catch (error) {
       console.error("Error loading file:", error);
     }
+  };
+  const saveToBrowser = async () => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
   return (
@@ -204,10 +219,14 @@ const WeeklyTasks = () => {
             <Button
               onClick={addTask}
               className={`flex-item rounded-md text-white ${isLocked ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"}`}
-              disabled={isLocked}
+              // disabled={isLocked}
             >
               Add Task
             </Button>
+
+            {/* <Button onClick={saveToBrowser} className="flex-item rounded-md bg-green-500 text-white hover:bg-green-600">
+              Save
+            </Button> */}
             
             <Button
               onClick={loadFromFile}
@@ -219,7 +238,7 @@ const WeeklyTasks = () => {
               onClick={toggleLock}
               className="flex-item rounded-md text-white bg-yellow-500 hover:bg-yellow-600"
             >
-              {isLocked ? "Save Progress" : "Lock"}
+              {isLocked ? "Save Progress To File" : "Save"}
             </Button>
           </div>
         </div>
@@ -277,7 +296,7 @@ const WeeklyTasks = () => {
                           In Progress
                         </Button>
                         <Button
-                          onClick={() => updateTaskStatus(task.id, "Completed")}
+                          onClick={() => updateTaskStatus(task.id, "Completed") && setCelebration(true)}
                           className={`px-2 py-1 ${task.status === "Completed" ? "bg-green-500" : "bg-gray-200"} text-black mr-2`}
                         >
                           Done
@@ -311,8 +330,8 @@ const WeeklyTasks = () => {
       {showFullTitlePopup && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Full Task Title</h2>
-            <p>{fullTitle}</p>
+            {/* <h2>Full Task Title</h2> */}
+            <h2>{fullTitle}</h2>
             <Button onClick={() => setShowFullTitlePopup(false)} className="bg-red-500 text-white">
               Close
             </Button>

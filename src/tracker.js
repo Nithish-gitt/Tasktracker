@@ -37,7 +37,7 @@ const WeeklyTasks = () => {
     const daysUntilNextMonday = (dayOfWeek === 0) ? 1 : (8 - dayOfWeek); // If it's Sunday (0), Monday is 1 day away, else calculate the next Monday
     
     const nextMonday = new Date(today);
-    nextMonday.setDate(today.getDate() + daysUntilNextMonday); // Set to the next Monday
+    nextMonday.setDate(today.getDate() + (daysUntilNextMonday%7)); // Set to the next Monday
 
     // Create an object to store the dates for the upcoming week
     

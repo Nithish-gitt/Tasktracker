@@ -45,7 +45,7 @@ const WeeklyTasks = () => {
   
       // If the date is in the past (before today), get last week's equivalent
       if (date < today) {
-        date.setDate(date.getDate() - 7);
+        date.setDate(date.getDate() + 7);
       }
   
       weekDates[days[i]] = formatDate(date);

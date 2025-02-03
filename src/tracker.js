@@ -27,25 +27,31 @@ const WeeklyTasks = () => {
     const yyyy = date.getFullYear();
     return `${dd}/${mm}/${yyyy}`;
   };
-
-  // Function to calculate the dates for the upcoming week, starting from the next Monday
+  
+  // Function to calculate the week dates (previous for past days, upcoming for future)
   const calculateUpcomingWeekDates = () => {
-    const today = new Date();
-    const dayOfWeek = today.getDay(); // Get current day of the week (0=Sunday, 1=Monday, etc.)
-    
-    // Calculate the number of days until next Monday
-    const daysUntilNextMonday = (dayOfWeek === 0) ? 1 : (8 - dayOfWeek); // If it's Sunday (0), Monday is 1 day away, else calculate the next Monday
-    
-    const nextMonday = new Date(today);
-    nextMonday.setDate(today.getDate() + daysUntilNextMonday); // Set to the next Monday
-
-    // Create an object to store the dates for the upcoming week
-    
+    let today = new Date();
+    let dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  
+    let weekDates = {};
+  
+    // Find the Monday of the current week
+    let mondayOfThisWeek = new Date(today);
+    mondayOfThisWeek.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+  
     for (let i = 0; i < 7; i++) {
-      const date = new Date(nextMonday);
-      date.setDate(nextMonday.getDate() + i); // Adjust date for each day of the week
-      weekDates[days[i]] = formatDate(date); // Store the formatted date for each day
+      let date = new Date(mondayOfThisWeek);
+      date.setDate(mondayOfThisWeek.getDate() + i); // Calculate each day's date
+  
+      // If the date is in the past (before today), get last week's equivalent
+      if (date < today) {
+        date.setDate(date.getDate() + 7);
+      }
+  
+      weekDates[days[i]] = formatDate(date);
     }
+  
+    console.log(weekDates);
     setDates(weekDates);
   };
 

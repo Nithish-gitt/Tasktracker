@@ -2,7 +2,7 @@
   "name": "tasktracker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Nithish-gitt.github.io/Tasktracker",
+  "homepage": "https://Nithish-gitt.github.io/Tasktracker/new",
   "dependencies": {
     "cra-template": "1.2.0",
     "jspdf": "^2.5.2",
@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
